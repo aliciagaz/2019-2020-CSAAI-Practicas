@@ -31,11 +31,16 @@ resta.onclick = () => {
   display.innerHTML += resta.value;
 }
 
+//-- Insertar simbolo de multiplicacion
+
 
 //-- Evaluar la expresion
 igual.onclick = () => {
   display.innerHTML = eval(display.innerHTML);
 }
+
+//-- Quitar el ultimo numero
+
 
 //-- Poner a cero la expresion
 clear.onclick = () => {
