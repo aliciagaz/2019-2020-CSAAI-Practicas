@@ -1,9 +1,10 @@
 console.log("Ejecutando JS...");
 
 display = document.getElementById("display")
-suma = document.getElementById("suma")
 igual = document.getElementById("igual")
-clear = document.getElementById("clear")
+clear_todo = document.getElementById("clear_todo")
+clear_anterior = document.getElementById("clear_anterior")
+
 
 let digitos = document.getElementsByClassName("cdigito");
 
@@ -32,17 +33,24 @@ resta.onclick = () => {
 }
 
 //-- Insertar simbolo de multiplicacion
+multiplicacion.onclick = () => {
+  display.innerHTML += multiplicacion.value;
+}
 
+//-- Insertar simbolo de division
+division.onclick = () => {
+  display.innerHTML += division.value;
+}
 
 //-- Evaluar la expresion
 igual.onclick = () => {
   display.innerHTML = eval(display.innerHTML);
 }
 
-//-- Quitar el ultimo numero
+//-- Quitar el ultimo numero (C)
 
 
-//-- Poner a cero la expresion
+//-- Poner a cero la expresion (AC)
 clear.onclick = () => {
   display.innerHTML = "0";
 }
