@@ -5,15 +5,13 @@ igual = document.getElementById("igual")
 clear_todo = document.getElementById("clear_todo")
 clear_anterior = document.getElementById("clear_anterior")
 
-
+//-- Crea un array con todos los tipos de digitos
 let digitos = document.getElementsByClassName("cdigito");
 
-for (i=0; i<digitos.length; i++){
-  digitos[i].onclick = (ev)=>{
-    digito(ev.target);
-  }
-}
+//-- Crea un array con todos los tipos de operaciones
+let operaciones = document.getElementsByClassName("operador");
 
+//-- Funcion que pone el display de inicio siempre a '0'
 function digito(boton) {
   if (display.innerHTML =="0") {
     display.innerHTML = boton.value;
@@ -22,24 +20,18 @@ function digito(boton) {
   }
 }
 
-//-- Insertar simbolo de sumar
-suma.onclick = () => {
-  display.innerHTML += suma.value;
+//-- Bucle que lee cada 'digito' que se va pulsando
+for (i=0; i<digitos.length; i++){
+  digitos[i].onclick = (ev)=>{
+    digito(ev.target);
+  }
 }
 
-//-- Insertar simbolo de restar
-resta.onclick = () => {
-  display.innerHTML += resta.value;
-}
-
-//-- Insertar simbolo de multiplicacion
-multiplicacion.onclick = () => {
-  display.innerHTML += multiplicacion.value;
-}
-
-//-- Insertar simbolo de division
-division.onclick = () => {
-  display.innerHTML += division.value;
+//-- Bucle que lee cada 'operacion' que se pulsando
+for (i=0; i<operaciones.length; i++){
+  operaciones[i].onclick = (ev)=>{
+    digito(ev.target);
+  }
 }
 
 //-- Evaluar la expresion
@@ -47,10 +39,12 @@ igual.onclick = () => {
   display.innerHTML = eval(display.innerHTML);
 }
 
-//-- Quitar el ultimo numero (C)
+//-- Borrar el ultimo numero de la expresion (C)
+clear_anterior.onclick = () => {
+  display.innerHTML = display.innerHTML.slice(0,-1);
+}
 
-
-//-- Poner a cero la expresion (AC)
+//-- Poner a cero la expresion (AC) - Borrar todo
 clear.onclick = () => {
   display.innerHTML = "0";
 }
