@@ -65,15 +65,27 @@ function animacion()
 {
 
   //-- Actualizar las posiciones de los objetos móviles
-  //-- Actualizar coordenada x de la bola
-  bola_x += 1;
+
+  //-- Comprobar si la bola ha alcanzado el límite derecho
+  //-- Si es así, se cambia de signo la velocidad, para
+  // que "rebote" y vaya en el sentido opuesto
+  if (bola_x >= canvas.width) {
+    //-- Hay colisión. Cambiar el signo de la bola
+      bola_vx = bola_vx * -1;
+  }else if (bola_x < canvas.width) {
+        bola_vx = bola_vx * 1;
+  }
+
+
+  //-- Actualizar coordenada x de la bola, en funcion de
+  //-- su velocidad
+  bola_x += bola_vx;
+
   //-- Borrar la pantalla
   ctx.clearRect(0,0, canvas.width, canvas.height);
 
   //-- Dibujar el nuevo frame
   draw();
-
-
 }
 
 //-- Arrancar la animación
@@ -85,16 +97,10 @@ setInterval(()=>{
 const sacar = document.getElementById("sacar");
 
 //-- Botón de saque:
-//-- Velocidad inicial de la bola
+//-- Dar a la bola una velocidad inicial
+//-- También restablecemos la posicion inicial
 sacar.onclick = () => {
   bola_x = 50;
-  bola_vx = 3;
-  console.log("¡Saque!");
-}
-//-- Botón de Reset:
-//-- la bola vuelve a su posición inicial
-reset.onclick = () => {
-  //-- Establecer posicion inicial de la bola
-  bola_x = 50;
-  console.log("Reset!");
+  bola_vx = 6; //-- Velocidad de la bola
+  console.log("Saque!");
 }
