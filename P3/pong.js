@@ -65,12 +65,15 @@ function animacion()
 {
 
   //-- Actualizar las posiciones de los objetos móviles
+  //-- Actualizar coordenada x de la bola
   bola_x += 1;
   //-- Borrar la pantalla
   ctx.clearRect(0,0, canvas.width, canvas.height);
 
   //-- Dibujar el nuevo frame
   draw();
+
+
 }
 
 //-- Arrancar la animación
@@ -78,14 +81,20 @@ setInterval(()=>{
   animacion();
 },16);
 
-//-- Obtener el boton de dar un "paso"
-const paso = document.getElementById("paso");
+//-- Obtener el boton de saque
+const sacar = document.getElementById("sacar");
 
-//-- Botón de dar un Paso: Cada vez que lo apretamos
-//-- la bola avanza 5 píxeles
-paso.onclick = () => {
-  //-- Incrementar la posicion x de la bola
-  bola_x += 5;
-  console.log("Paso!");
-
+//-- Botón de saque:
+//-- Velocidad inicial de la bola
+sacar.onclick = () => {
+  bola_x = 50;
+  bola_vx = 3;
+  console.log("¡Saque!");
+}
+//-- Botón de Reset:
+//-- la bola vuelve a su posición inicial
+reset.onclick = () => {
+  //-- Establecer posicion inicial de la bola
+  bola_x = 50;
+  console.log("Reset!");
 }
