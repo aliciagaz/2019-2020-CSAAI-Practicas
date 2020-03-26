@@ -10,14 +10,18 @@ console.log(`canvas: Anchura: ${canvas.width}, Altura: ${canvas.height}`);
 //-- Obtener el contexto para pintar en el canvas
 const ctx = canvas.getContext("2d");
 
+//-- Variables para la bola
+let bola_x = 50;
+
 //-- Pintar todos los objetos en el canvas
 function draw() {
+
   //----- Dibujar la Bola
   ctx.beginPath();
   ctx.fillStyle='pink';
 
   //-- x,y, anchura, altura
-  ctx.rect(50, 200, 10, 10);
+  ctx.rect(bola_x, 200, 10, 10);
   ctx.fill();
 
   //------- Dibujar las raquetas
@@ -55,24 +59,18 @@ function draw() {
   ctx.fillText("0", 200, 80);
   ctx.fillText("1", 340, 80);
 }
+
 //---- Bucle principal de la animación
 function animacion()
 {
 
   //-- Actualizar las posiciones de los objetos móviles
-  //-- De momento no lo estamos haciendo
-
+  bola_x += 1;
   //-- Borrar la pantalla
   ctx.clearRect(0,0, canvas.width, canvas.height);
 
   //-- Dibujar el nuevo frame
   draw();
-
-  //-- Mostrar actividad en la consola
-  //-- Para comprobar que "está vivo",
-  //-- aunque no se mueva nada en la pantalla
-  //-- todavía
-  console.log("Frame!");
 }
 
 //-- Arrancar la animación
@@ -80,5 +78,14 @@ setInterval(()=>{
   animacion();
 },16);
 
-//-- OJO! Como no estamos actualizando las posiciones de
-//-- ningún objeto, no veremos nada moverse todavía
+//-- Obtener el boton de dar un "paso"
+const paso = document.getElementById("paso");
+
+//-- Botón de dar un Paso: Cada vez que lo apretamos
+//-- la bola avanza 5 píxeles
+paso.onclick = () => {
+  //-- Incrementar la posicion x de la bola
+  bola_x += 5;
+  console.log("Paso!");
+
+}
