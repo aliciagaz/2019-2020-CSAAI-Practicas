@@ -10,15 +10,40 @@ console.log(`canvas: Anchura: ${canvas.width}, Altura: ${canvas.height}`);
 //-- Obtener el contexto para pintar en el canvas
 const ctx = canvas.getContext("2d");
 
+//-- Variables para la bola
+let bola_x = 100;
+let bola_y = 200;
+let bola_vx = 0;
+let bola_vy = 0;
+
+//-- Variables para la raqueta izquierda
+let raqI_x = 50;
+let raqI_y = 100;
+let raqI_v = 0;  //-- Velocidad
+
 //-- Pintar todos los objetos en el canvas
 function draw() {
 
   //----- Dibujar la Bola
-  bola.draw();
+  ctx.beginPath();
+  ctx.fillStyle='white';
 
-  //-- Dibujar las raquetas
-  raqI.draw();
-  raqD.draw();
+  //-- x,y, anchura, altura
+  ctx.rect(bola_x, bola_y, 10, 10);
+  ctx.fill();
+
+  //------- Dibujar las raquetas
+  ctx.beginPath();
+  ctx.fillStyle='white';
+
+  //-- Raqueta izquierda
+  ctx.rect(raqI_x, raqI_y, 10, 40);
+
+  //-- Raqueta derecha
+  ctx.rect(540, 300, 10, 40);
+
+  //-- Pintar!
+  ctx.fill();
 
   //--------- Dibujar la red
   ctx.beginPath();
@@ -46,36 +71,32 @@ function draw() {
 //---- Bucle principal de la animación
 function animacion()
 {
-
-  //-- Actualizar las posiciones de los objetos móviles
-
   //-- Actualizar la raqueta con la velocidad actual
-  raqI.update();
-  raqD.update();
+  raqI_y += raqI_v;
 
   //-- Comprobar si la bola ha alcanzado el límite derecho
   //-- Si es así, se cambia de signo la velocidad, para
   // que "rebote" y vaya en el sentido opuesto
-  if (bola.x >= canvas.width) {
-      bola.vx = bola.vx * -1;
-    } else if (bola.x <= 0){
-      bola.vx = bola.vx * -1;
+  if (bola_x >= canvas.width) {
+      bola_vx = bola_vx * -1;   //-- Hay colisión. Cambiar el signo de la bola
+    } else if (bola_x <= 0) {
+       bola_vx = bola_vx * -1;
+    } else if (bola_y >= canvas.height) {
+       bola_vy = bola_vy * -1;
+    } else if (bola_y <= 0) {
+       bola_vy = bola_vy * -1;
     }
-  if (bola.y >= canvas.height) {
-      bola.vy = bola.vy * -1;
-    } else if (bola.y <= 0) {
-     bola.vy = bola.vy * -1;
-   }
 
   //-- Comprobar si hay colisión con la raqueta izquierda
-  if (bola.x >= raqI.x && bola.x <=(raqI.x + raqI.width) &&
-      bola.y >= raqI.y && bola.y <=(raqI.y + raqI.height)) {
-    bola.vx = bola.vx * -1;
+  if (bola_x >= raqI_x && bola_x <=(raqI_x+10) &&
+      bola_y >= raqI_y && bola_y <=(raqI_y+40)) {
+    bola_vx = bola_vx * -1;
   }
 
   //-- Actualizar coordenada x de la bola, en funcion de
   //-- su velocidad
-  bola.update()
+  bola_x += bola_vx;
+  bola_y += bola_vy;
 
   //-- Borrar la pantalla
   ctx.clearRect(0,0, canvas.width, canvas.height);
@@ -83,18 +104,6 @@ function animacion()
   //-- Dibujar el nuevo frame
   draw();
 }
-
-//-- Inicializa la bola: Llevarla a su posicion inicial
-const bola = new Bola(ctx);
-
-//-- Crear las raquetas
-const raqI = new Raqueta(ctx);
-const raqD = new Raqueta(ctx);
-
-//-- Cambiar las coordenadas de la raqueta derecha
-raqD.x_ini = 540;
-raqD.y_ini = 300;
-raqD.init();
 
 //-- Arrancar la animación
 setInterval(()=>{
@@ -106,23 +115,14 @@ window.onkeydown = (e) => {
 
   switch (e.key) {
     case "a":
-      raqI.v = raqI.v_ini;
+      raqI_v = 3;
       break;
     case "q":
-      raqI.v = raqI.v_ini * -1;
-      break;
-    case "p":
-      raqD.v = raqD.v_ini * -1;
-      break;
-    case "l":
-      raqD.v = raqD.v_ini;
+      raqI_v = -3;
       break;
     case " ":
-      //-- Llevar bola a su posicion incicial
-      bola.init();
-
-      //-- Darle velocidad
-      bola.vx = bola.vx_ini;
+      bola_x = 100;
+      bola_vx = 6;
     default:
   }
 }
@@ -131,10 +131,7 @@ window.onkeydown = (e) => {
 window.onkeyup = (e) => {
   if (e.key == "a" || e.key == "q"){
     //-- Quitar velocidad de la raqueta
-    raqI.v = 0;
+    raqI_v = 0;
   }
 
-  if (e.key == "p" || e.key == "l") {
-    raqD.v = 0;
-  }
 }
