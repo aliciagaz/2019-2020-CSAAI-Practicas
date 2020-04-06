@@ -10,6 +10,7 @@ console.log(`canvas: Anchura: ${canvas.width}, Altura: ${canvas.height}`);
 //-- Obtener el contexto para pintar en el canvas
 const ctx = canvas.getContext("2d");
 
+
 //-- Pintar todos los objetos en el canvas
 function draw() {
 
@@ -72,6 +73,14 @@ function animacion()
       bola.y >= raqI.y && bola.y <=(raqI.y + raqI.height)) {
     bola.vx = bola.vx * -1;
   }
+
+  //-- Comprobar si hay colisión con la raqueta derecha
+  if (bola.x >= raqD.x && bola.x <=(raqD.x + raqD.width) &&
+      bola.y >= raqD.y && bola.y <=(raqD.y + raqD.height) &&
+      (raqD.v <= 0)) {
+        bola.vx = bola.vx * -1;
+      }
+
 
   //-- Actualizar coordenada x de la bola, en funcion de
   //-- su velocidad
