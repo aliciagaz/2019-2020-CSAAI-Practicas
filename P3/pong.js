@@ -88,7 +88,6 @@ function animacion()
         //-- Reproducir sonido
         sonido_raqueta.currentTime = 0;
         sonido_raqueta.play();
-        
       }
 
   //-- Actualizar coordenada x de la bola, en funcion de
