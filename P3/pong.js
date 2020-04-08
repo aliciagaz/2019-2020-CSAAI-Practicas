@@ -10,6 +10,9 @@ console.log(`canvas: Anchura: ${canvas.width}, Altura: ${canvas.height}`);
 //-- Obtener el contexto para pintar en el canvas
 const ctx = canvas.getContext("2d");
 
+//-- Obtener Sonidos
+const sonido_raqueta = new Audio("pong-raqueta.mp3");
+const sonido_rebote = new Audio("pong-rebote.mp3");
 
 //-- Pintar todos los objetos en el canvas
 function draw() {
@@ -54,24 +57,26 @@ function animacion()
   raqI.update();
   raqD.update();
 
+
   //-- Comprobar si la bola ha alcanzado el límite derecho
   //-- Si es así, se cambia de signo la velocidad, para
   // que "rebote" y vaya en el sentido opuesto
   if (bola.x >= canvas.width) {
-      bola.vx = bola.vx * -1;
-    } else if (bola.x <= 0){
-      bola.vx = bola.vx * -1;
-    }
-  if (bola.y >= canvas.height) {
-      bola.vy = bola.vy * -1;
-    } else if (bola.y <= 0) {
-     bola.vy = bola.vy * -1;
-   }
+    //-- Hay colisión. Cambiar el signo de la bola
+    bola.vx = bola.vx * -1;
+    //-- Reproducir sonido
+    sonido_rebote.currentTime = 0;
+    sonido_rebote.play();
+  }
 
   //-- Comprobar si hay colisión con la raqueta izquierda
   if (bola.x >= raqI.x && bola.x <=(raqI.x + raqI.width) &&
       bola.y >= raqI.y && bola.y <=(raqI.y + raqI.height)) {
     bola.vx = bola.vx * -1;
+
+    //-- Reproducir sonido
+    sonido_raqueta.currentTime = 0;
+    sonido_raqueta.play();
   }
 
   //-- Comprobar si hay colisión con la raqueta derecha
@@ -79,8 +84,12 @@ function animacion()
       bola.y >= raqD.y && bola.y <=(raqD.y + raqD.height) &&
       (raqD.v <= 0)) {
         bola.vx = bola.vx * -1;
-      }
 
+        //-- Reproducir sonido
+        sonido_raqueta.currentTime = 0;
+        sonido_raqueta.play();
+        
+      }
 
   //-- Actualizar coordenada x de la bola, en funcion de
   //-- su velocidad
@@ -127,6 +136,11 @@ window.onkeydown = (e) => {
       raqD.v = raqD.v_ini;
       break;
     case " ":
+
+      //-- Reproducir sonido
+      sonido_raqueta.currentTime = 0;
+      sonido_raqueta.play();
+
       //-- Llevar bola a su posicion incicial
       bola.init();
 
