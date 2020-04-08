@@ -19,11 +19,20 @@ const ESTADO = {
   INIT: 0,
   SAQUE: 1,
   JUGANDO: 2,
+  FIN: 3,
 }
 
 //-- Variable de estado
 //-- Arrancamos desde el estado inicial
 let estado = ESTADO.INIT;
+
+//-- Variables para los contadores del tanto
+let Cont_I = 0;
+let Cont_D = 0;
+
+//-- Variable para la puntuación máxima del juego
+let Punt_max = 3;
+
 
 //-- Pintar todos los objetos en el canvas
 function draw() {
@@ -31,6 +40,11 @@ function draw() {
   //-- Solo en el estado de jugando
   if (estado == ESTADO.JUGANDO) {
     bola.draw();
+  }
+  if (estado == ESTADO.FIN) {
+    ctx.fillStyle = "white black";
+    ctx.font = "100px monospace";
+    ctx.fillText("GAME OVER", 20, 100);
   }
 
   //-- Dibujar las raquetas
@@ -45,6 +59,7 @@ function draw() {
   ctx.setLineDash([10, 10]);
   ctx.strokeStyle = 'white';
   ctx.lineWidth = 2;
+
   //-- Punto superior de la linea. Su coordenada x está en la mitad
   //-- del canvas
   ctx.moveTo(canvas.width/2, 0);
@@ -54,17 +69,17 @@ function draw() {
   ctx.stroke();
 
   //------ Dibujar el tanteo
-  ctx.font = "100px Arial";
+  ctx.font = "80px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText("0", 200, 80);
-  ctx.fillText("1", 340, 80);
+  ctx.fillText(Cont_I, 200, 80);
+  ctx.fillText(Cont_D, 340, 80);
 
   //-- Dibujar el texto de sacar
   if (estado == ESTADO.SAQUE) {
     ctx.font = "40px Arial";
     ctx.fillStyle = "yellow";
-    ctx.fillText("Saca!", 30, 350);
-  }
+    ctx.fillText("¡ Saca !", 30, 350);
+  } 
 
   //-- Dibujar el texto de comenzar
   if (estado == ESTADO.INIT) {
@@ -85,25 +100,43 @@ function animacion()
   raqD.update();
 
 
-  //-- Comprobar si la bola ha alcanzado el límite derecho
-  //-- Si es así, se cambia de signo la velocidad, para
-  // que "rebote" y vaya en el sentido opuesto
+  //-- Comprobar si la bola ha alcanzado los límites
+  //-- Si es el límite izquierdo o derecho se suma en el tanto
+  //-- Si son los otros límites rebota en el sentido opuesto
   if (bola.x >= canvas.width) {
-    //-- Hay colisión. Cambiar el signo de la bola
-    bola.vx = bola.vx * -1;
-    //-- Reproducir sonido
-    sonido_rebote.currentTime = 0;
-    sonido_rebote.play();
-  }
+      estado = ESTADO.SAQUE;
+      bola.init();
+      console.log("¡¡¡ Goooooool !!!");
+      Cont_I++;
 
-  //-- Si llega al límite izquierdo, hemos perdido
-  //-- pasamos al estado de SAQUE
-  if (bola.x <= bola.size) {
-     estado = ESTADO.SAQUE;
-     bola.init();
-     console.log("Tanto!!!!");
-     return;
-  }
+      //-- Reproducir sonido
+      sonido_rebote.currentTime = 0;
+      sonido_rebote.play();
+
+    } else if (bola.x <= 0){
+      estado = ESTADO.SAQUE;
+      bola.init();
+      console.log("¡¡¡ Goooooool !!!");
+      Cont_D++;
+
+      //-- Reproducir sonido
+      sonido_rebote.currentTime = 0;
+      sonido_rebote.play();
+
+    } else if (bola.y >= canvas.height) {
+      bola.vy = bola.vy * -1;
+
+      //-- Reproducir sonido
+      sonido_rebote.currentTime = 0;
+      sonido_rebote.play();
+
+    } else if (bola.y <= 0) {
+     bola.vy = bola.vy * -1;
+     //-- Reproducir sonido
+     sonido_rebote.currentTime = 0;
+     sonido_rebote.play();
+   }
+
 
   //-- Comprobar si hay colisión con la raqueta izquierda
   if (bola.x >= raqI.x && bola.x <=(raqI.x + raqI.width) &&
@@ -135,6 +168,10 @@ function animacion()
 
   //-- Dibujar el nuevo frame
   draw();
+
+  //-- Funcón de animaciones
+  window.requestAnimationFrame(animacion);
+
 }
 
 //-- Inicializa la bola: Llevarla a su posicion inicial
@@ -150,9 +187,7 @@ raqD.y_ini = 300;
 raqD.init();
 
 //-- Arrancar la animación
-setInterval(()=>{
-  animacion();
-},16);
+animacion();
 
 //-- Retrollamada de las teclas
 window.onkeydown = (e) => {
@@ -188,6 +223,7 @@ window.onkeydown = (e) => {
 
         //-- Darle velocidad
         bola.vx = bola.vx_ini;
+        bola.vy = bola.vy_ini;
 
         //-- Cambiar al estado de jugando!
         estado = ESTADO.JUGANDO;
@@ -212,7 +248,6 @@ window.onkeyup = (e) => {
 
 //-- Botón de arranque
 const start = document.getElementById("start");
-
 start.onclick = () => {
   estado = ESTADO.SAQUE;
   console.log("SAQUE!");
