@@ -14,11 +14,24 @@ const ctx = canvas.getContext("2d");
 const sonido_raqueta = new Audio("pong-raqueta.mp3");
 const sonido_rebote = new Audio("pong-rebote.mp3");
 
+//-- Estados del juego
+const ESTADO = {
+  INIT: 0,
+  SAQUE: 1,
+  JUGANDO: 2,
+}
+
+//-- Variable de estado
+//-- Arrancamos desde el estado inicial
+let estado = ESTADO.INIT;
+
 //-- Pintar todos los objetos en el canvas
 function draw() {
-
   //----- Dibujar la Bola
-  bola.draw();
+  //-- Solo en el estado de jugando
+  if (estado == ESTADO.JUGANDO) {
+    bola.draw();
+  }
 
   //-- Dibujar las raquetas
   raqI.draw();
@@ -45,6 +58,20 @@ function draw() {
   ctx.fillStyle = "white";
   ctx.fillText("0", 200, 80);
   ctx.fillText("1", 340, 80);
+
+  //-- Dibujar el texto de sacar
+  if (estado == ESTADO.SAQUE) {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "yellow";
+    ctx.fillText("Saca!", 30, 350);
+  }
+
+  //-- Dibujar el texto de comenzar
+  if (estado == ESTADO.INIT) {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "green";
+    ctx.fillText("Pulsa Start!", 30, 350);
+  }
 }
 
 //---- Bucle principal de la animación
@@ -67,6 +94,15 @@ function animacion()
     //-- Reproducir sonido
     sonido_rebote.currentTime = 0;
     sonido_rebote.play();
+  }
+
+  //-- Si llega al límite izquierdo, hemos perdido
+  //-- pasamos al estado de SAQUE
+  if (bola.x <= bola.size) {
+     estado = ESTADO.SAQUE;
+     bola.init();
+     console.log("Tanto!!!!");
+     return;
   }
 
   //-- Comprobar si hay colisión con la raqueta izquierda
@@ -121,6 +157,11 @@ setInterval(()=>{
 //-- Retrollamada de las teclas
 window.onkeydown = (e) => {
 
+  //-- En el estado inicial no se
+  //-- hace caso de las teclas
+  if (estado == ESTADO.INIT)
+    return;
+
   switch (e.key) {
     case "a":
       raqI.v = raqI.v_ini;
@@ -134,17 +175,25 @@ window.onkeydown = (e) => {
     case "l":
       raqD.v = raqD.v_ini;
       break;
-    case " ":
+    case "s":
 
-      //-- Reproducir sonido
-      sonido_raqueta.currentTime = 0;
-      sonido_raqueta.play();
+      //-- El saque solo funciona en el estado de SAQUE
+      if (estado == ESTADO.SAQUE) {
+        //-- Reproducir sonido
+        sonido_raqueta.currentTime = 0;
+        sonido_raqueta.play();
 
-      //-- Llevar bola a su posicion incicial
-      bola.init();
+        //-- Llevar bola a su posicion incicial
+        bola.init();
 
-      //-- Darle velocidad
-      bola.vx = bola.vx_ini;
+        //-- Darle velocidad
+        bola.vx = bola.vx_ini;
+
+        //-- Cambiar al estado de jugando!
+        estado = ESTADO.JUGANDO;
+
+        return false;
+      }
     default:
   }
 }
@@ -159,4 +208,23 @@ window.onkeyup = (e) => {
   if (e.key == "p" || e.key == "l") {
     raqD.v = 0;
   }
+}
+
+//-- Botón de arranque
+const start = document.getElementById("start");
+
+start.onclick = () => {
+  estado = ESTADO.SAQUE;
+  console.log("SAQUE!");
+  canvas.focus();
+}
+
+//-- Boton de stop
+const stop = document.getElementById("stop");
+
+stop.onclick = () => {
+  //-- Volver al estado inicial
+  estado = ESTADO.INIT;
+  bola.init();
+  start.disabled = false;
 }
