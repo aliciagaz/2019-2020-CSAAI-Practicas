@@ -19,7 +19,6 @@ const ESTADO = {
   INIT: 0,
   SAQUE: 1,
   JUGANDO: 2,
-  FIN: 3,
 }
 
 //-- Variable de estado
@@ -41,11 +40,7 @@ function draw() {
   if (estado == ESTADO.JUGANDO) {
     bola.draw();
   }
-  if (estado == ESTADO.FIN) {
-    ctx.fillStyle = "white black";
-    ctx.font = "100px monospace";
-    ctx.fillText("GAME OVER", 20, 100);
-  }
+
 
   //-- Dibujar las raquetas
   raqI.draw();
@@ -68,6 +63,7 @@ function draw() {
   ctx.lineTo(canvas.width/2, canvas.height);
   ctx.stroke();
 
+
   //------ Dibujar el tanteo
   ctx.font = "80px Arial";
   ctx.fillStyle = "white";
@@ -77,17 +73,24 @@ function draw() {
   //-- Dibujar el texto de sacar
   if (estado == ESTADO.SAQUE) {
     ctx.font = "40px Arial";
-    ctx.fillStyle = "yellow";
+    ctx.fillStyle = "#4C148E";
     ctx.fillText("¡ Saca !", 30, 350);
-  } 
+  }
 
   //-- Dibujar el texto de comenzar
   if (estado == ESTADO.INIT) {
     ctx.font = "40px Arial";
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "#4C148E";
     ctx.fillText("Pulsa Start!", 30, 350);
   }
+  //-- Dibujar el texto de finalizar
+  if ((Cont_D == Punt_max) || (Cont_I == Punt_max)){
+    ctx.font = "75px Arial";
+    ctx.fillStyle = "#4C148E";
+    ctx.fillText("¡GAME OVER!", 50, 230);
+  }
 }
+
 
 //---- Bucle principal de la animación
 function animacion()
