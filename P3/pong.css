@@ -1,13 +1,47 @@
 /* Fondo de la página */
 body {
-    background-color: lightblue;
+    background-image: url("fondo_retro.jpg");
+    background-size: 60px 80px;
+    background-size: 100% 90%;
+    background-repeat: repeat;
+
 }
 
 /* Estilo para el canvas: Negro */
 #canvas {
-  background-color: black;
+  background-color: #F1C612;
+  border-radius: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
 h1{
-  color: blue;
+  text-align: center;
+
+  color: #F1C612;
+  font-size: 80px;
+  letter-spacing: 15px;
+}
+
+button {
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 30px;
+  color: #4C148E;
+  padding-top:25px;
+  padding-bottom:25px;
+  padding-left:30px;
+  padding-right:30px;
+  background-color:#F1C612;
+  border-radius:70px;
+  }
+
+
+p{
+  text-align: center;
+  color: #F1C612;
+  font-size: 20px;
+  border: none;
 }
