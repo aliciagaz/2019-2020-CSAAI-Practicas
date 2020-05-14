@@ -13,7 +13,7 @@ class Bola {
     //-- Posicion generica de la bola
     this.x = 0;
     this.y = 0;
-
+    
     //-- Velocidad inicial de la bola
     this.vx_ini = 6;
     this.vy_ini = 3;
