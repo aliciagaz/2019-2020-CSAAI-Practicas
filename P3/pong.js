@@ -83,7 +83,7 @@ function draw() {
     ctx.fillStyle = "#4C148E";
     ctx.fillText("Pulsa Start!", 30, 350);
   }
-
+  
   //-- Dibujar el texto de finalizar
   if (estado == ESTADO.FIN){
       ctx.font = "75px Arial";
