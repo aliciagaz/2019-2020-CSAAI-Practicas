@@ -10,15 +10,17 @@ console.log(`canvas: Anchura: ${canvas.width}, Altura: ${canvas.height}`);
 //-- Obtener el contexto para pintar en el canvas
 const ctx = canvas.getContext("2d");
 
-//-- Obtener Sonidos
+//-- Sonidos del juego
 const sonido_raqueta = new Audio("pong-raqueta.mp3");
 const sonido_rebote = new Audio("pong-rebote.mp3");
+const sonido_victoria = new Audio ("musica_ganador.mp3");
 
 //-- Estados del juego
 const ESTADO = {
   INIT: 0,
   SAQUE: 1,
   JUGANDO: 2,
+  FIN: 3,
 }
 
 //-- Variable de estado
@@ -41,7 +43,6 @@ function draw() {
     bola.draw();
   }
 
-
   //-- Dibujar las raquetas
   raqI.draw();
   raqD.draw();
@@ -63,7 +64,6 @@ function draw() {
   ctx.lineTo(canvas.width/2, canvas.height);
   ctx.stroke();
 
-
   //------ Dibujar el tanteo
   ctx.font = "80px Arial";
   ctx.fillStyle = "white";
@@ -83,11 +83,12 @@ function draw() {
     ctx.fillStyle = "#4C148E";
     ctx.fillText("Pulsa Start!", 30, 350);
   }
+
   //-- Dibujar el texto de finalizar
-  if ((Cont_D == Punt_max) || (Cont_I == Punt_max)){
-    ctx.font = "75px Arial";
-    ctx.fillStyle = "#4C148E";
-    ctx.fillText("¡GAME OVER!", 50, 230);
+  if (estado == ESTADO.FIN){
+      ctx.font = "75px Arial";
+      ctx.fillStyle = "#4C148E";
+      ctx.fillText("¡GAME OVER!", 50, 230);
   }
 }
 
@@ -102,16 +103,18 @@ function animacion()
   raqI.update();
   raqD.update();
 
-
   //-- Comprobar si la bola ha alcanzado los límites
   //-- Si es el límite izquierdo o derecho se suma en el tanto
   //-- Si son los otros límites rebota en el sentido opuesto
   if (bola.x >= canvas.width) {
       estado = ESTADO.SAQUE;
       bola.init();
-      console.log("¡¡¡ Goooooool !!!");
+      console.log("¡¡¡ Goooooool del jugador A!!!");
       Cont_I++;
-
+      if (Cont_I == Punt_max){
+        estado = ESTADO.FIN;
+        sonido_victoria.play();
+      }
       //-- Reproducir sonido
       sonido_rebote.currentTime = 0;
       sonido_rebote.play();
@@ -119,9 +122,12 @@ function animacion()
     } else if (bola.x <= 0){
       estado = ESTADO.SAQUE;
       bola.init();
-      console.log("¡¡¡ Goooooool !!!");
+      console.log("¡¡¡ Goooooool del jugador B !!!");
       Cont_D++;
-
+      if (Cont_D == Punt_max){
+        estado = ESTADO.FIN;
+        sonido_victoria.play();
+      }
       //-- Reproducir sonido
       sonido_rebote.currentTime = 0;
       sonido_rebote.play();
@@ -139,7 +145,6 @@ function animacion()
      sonido_rebote.currentTime = 0;
      sonido_rebote.play();
    }
-
 
   //-- Comprobar si hay colisión con la raqueta izquierda
   if (bola.x >= raqI.x && bola.x <=(raqI.x + raqI.width) &&
@@ -217,6 +222,7 @@ window.onkeydown = (e) => {
 
       //-- El saque solo funciona en el estado de SAQUE
       if (estado == ESTADO.SAQUE) {
+
         //-- Reproducir sonido
         sonido_raqueta.currentTime = 0;
         sonido_raqueta.play();
@@ -233,6 +239,13 @@ window.onkeydown = (e) => {
 
         return false;
       }
+    //-- Volver a jugar
+    case "h":
+        if (estado == ESTADO.FIN){
+          Cont_I = 0;
+          Cont_D = 0;
+          estado = ESTADO.INIT;
+        }
     default:
   }
 }
