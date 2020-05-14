@@ -262,6 +262,7 @@ window.onkeyup = (e) => {
   }
 }
 
+
 //-- Botón de arranque
 const start = document.getElementById("start");
 start.onclick = () => {
