@@ -25,13 +25,11 @@ video_emision.height = 300;
 const img_estatica = document.getElementById("img_estatica");
 
 
-
 //-- Imagen estática a mostrar cuando el video no
 //-- ha arrancado
 video1.poster = "https://github.com/myTeachingURJC/2019-2020-CSAAI/raw/master/L10/test.png";
 video2.poster = "https://github.com/myTeachingURJC/2019-2020-CSAAI/raw/master/L10/test.png";
 video3.poster = "https://github.com/myTeachingURJC/2019-2020-CSAAI/raw/master/L10/test.png";
-
 
 //-- BOTONES DE LA IMAGEN 1
 
@@ -44,6 +42,16 @@ sel1.onclick = () => {
   video1.play();
   video_emision.src = video1.src;
   video_emision.play();
+
+  //-- Seleccionar el borde del video que está en emisión
+  video1.style.border = "solid #8E1451 10px";
+  video2.style.border = "";
+  video3.style.border = "";
+  img_estatica.style.border = "";
+
+  //-- Silenciar el audio de los otros vídeos no seleccionados
+  video2.muted= true;
+  video3.muted= true;
 };
 
 
@@ -58,6 +66,16 @@ sel2.onclick = () => {
   video2.play();
   video_emision.src = video2.src;
   video_emision.play();
+
+  //-- Seleccionar el borde del video que está en emisión
+  video1.style.border = "";
+  video2.style.border = "solid #8E1451 10px";
+  video3.style.border = "";
+  img_estatica.style.border = "";
+
+  //-- Silenciar el audio de los otros vídeos no seleccionados
+  video1.muted= true;
+  video3.muted= true;
 };
 
 
@@ -72,16 +90,37 @@ sel3.onclick = () => {
   video3.play();
   video_emision.src = video3.src;
   video_emision.play();
+
+  //-- Seleccionar el borde del video que está en emisión
+  video1.style.border = "";
+  video2.style.border = "";
+  video3.style.border = "solid #8E1451 10px";
+  img_estatica.style.border = "";
+
+  //-- Silenciar el audio de los otros vídeos no seleccionados
+  video1.muted= true;
+  video2.muted= true;
 };
 
 
 //-- BOTONES DE LA IMAGEN ESTÁTICA
 
-const seleccionar = document.getElementById("sel4")
+const imagen_estatica = document.getElementById("sel4")
 
 //-- Función de retrollamada del botón de seleccionar
-sel4.onclick = () => {
+imagen_estatica.onclick = () => {
   console.log("EMISIÓN EN PRUEBAS");
-  video_emision.src = img_estatica.src;
   video_emision.src = null;
+  video_emision.poster = img_estatica.src;
+
+  //-- Seleccionar el borde del video que está en emisión
+  video1.style.border = "";
+  video2.style.border = "";
+  video3.style.border = "";
+  img_estatica.style.border = "solid #8E1451 10px";
+
+  //-- Silenciar el audio de los otros vídeos no seleccionados
+  video1.muted= true;
+  video2.muted= true;
+  video3.muted= true;
 };
