@@ -3,15 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>VIDEO EN EMISIÓN</title>
+    <link rel="stylesheet" href="video.css">
     <script src="video.js" defer></script>
   </head>
   <body>
-    <p>Prueba de vídeo</p>
-    <video loop id="video1"></video>
-    <video loop id="video2"></video>
-    <video loop id="video3"></video>
+      <h1>VÍDEO EN EMISIÓN<h1>
+      <div class="video_emision">
+        <video loop id="video_emision"></video>
+      </div>
+      <br>
+      <div class="video1">
+        <p>CANAL 1</p>
+        <video loop id="video1"></video>
+        <br>
+        <button id="play1">PLAY</button>
+        <button id="stop1">STOP</button>
+    </div>
     <br>
-    <button id="play">Ver!</button>
-    <button id="stop">Parar</button>
+    <div class="video2">
+      <p>CANAL 2</p>
+      <video loop id="video2"></video>
+      <br>
+      <button id="play2">PLAY</button>
+      <button id="stop2">STOP</button>
+    </div>
+    <br>
+    <div class="video3">
+      <p>CANAL 3</p>
+      <video loop id="video3"></video>
+      <br>
+      <button id="play3">PLAY</button>
+      <button id="stop3">STOP</button>
+    </div>
   </body>
 </html>
