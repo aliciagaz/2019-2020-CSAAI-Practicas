@@ -8,7 +8,7 @@ body {
 h1{
   text-align: center;
   color: white;
-  font-size: 80px;
+  font-size: 60px;
   letter-spacing: 15px;
 }
 
@@ -33,6 +33,13 @@ button {
   }
 
   video {
+    border-style: dotted;
+    border-radius: 30px;
+    border-color: #A73351;
+    border-width: medium;
+  }
+
+  img{
     border-style: dotted;
     border-radius: 30px;
     border-color: #A73351;
