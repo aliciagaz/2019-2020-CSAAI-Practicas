@@ -25,7 +25,7 @@ img.onload = function () {
 
   //-- Obtener el array con todos los píxeles
   let data = imgData.data
-
+  
   //-- data[0] es el canal rojo del pixel de la posición 0,0
   //-- data[1] es el canal verde del pixel 0,0
   //-- data[2] es el canal azul del pixel 0,0

@@ -21,7 +21,7 @@ img.onload = function () {
   //-- que el de la imagen original
   canvas.width = img.width;
   canvas.height = img.height;
-
+  
   //-- Situar la imagen original en el canvas
   //-- No se han hecho manipulaciones todavia
   ctx.drawImage(img, 0,0);
