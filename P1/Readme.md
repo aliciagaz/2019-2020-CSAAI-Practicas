@@ -12,4 +12,4 @@ Las mejoras que he implementado en dicha práctica han sido:
   - Gif
   - Página externa
 
-URL: https://aliciagaz.github.io/2019-2020-CSAAI-Practicas/P1/CV.html
+URL: https://aliciagaz.github.io/2019-2020-CSAAI-Practicas/P1/CV.html (abrir con Firefox)
