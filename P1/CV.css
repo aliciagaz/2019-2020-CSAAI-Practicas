@@ -1,12 +1,12 @@
-@font-face {
-  font-family: "heart-breaking-bad-2";
-  src: url("heart-breaking-bad-2.ttf");
-}
-
 body {
   background-image: url("imagen_fondo.jpg");
   background-repeat: no-repeat;
   background-size: 100% 120%;
+}
+
+@font-face {
+  font-family: "heart-breaking-bad-2";
+  src: url("heart-breaking-bad-2.ttf");
 }
 
 h1 {
