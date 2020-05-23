@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "heart-breaking-bad-2";
+  src: url("heart-breaking-bad-2.ttf");
+}
+
 body {
   background-image: url("imagen_fondo.jpg");
   background-repeat: no-repeat;
@@ -7,15 +12,15 @@ body {
 h1 {
   color: white;
   text-align: center;
-  font-family: "Heart_Breaking_Bad.ttf";
-  font-size: 280%
+  font-family: "heart-breaking-bad-2";
+  font-size: 280%;
 }
 
 h2 {
   color:white;
   text-align: center;
-  font-family: "Heart_Breaking_Bad.ttf";
-  font-size: 240%
+  font-family: "heart-breaking-bad-2";
+  font-size: 240%;
 }
 
 h3 {
