@@ -8,8 +8,10 @@ Hemos aprendido a utilizar HTML y CSS para dar así estilo a nuestra página. Ha
 
 Las mejoras que he implementado en dicha práctica han sido:
 
+  - Fuente de Breaking Bad
   - Música de fondo
-  - Gif
-  - Página externa
+  - Gif (uno formato pegatina)
+  - Botón que lleva a una página externa
+
 
 URL: https://aliciagaz.github.io/2019-2020-CSAAI-Practicas/P1/CV.html (abrir con Firefox)
