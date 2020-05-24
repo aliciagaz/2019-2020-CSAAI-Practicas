@@ -16,3 +16,30 @@ h1{
   font-size: 60px;
   letter-spacing: 15px;
 }
+
+button {
+  margin-top: auto;
+  font-weight: 800;
+  font-size: 12px;
+  color: #37708C;
+  padding-top:25px;
+  padding-bottom:25px;
+  padding-left:30px;
+  padding-right:30px;
+  background-color:#C68798;
+  border-radius:70px;
+  }
+
+img{
+  margin-left: 80px;
+}
+canvas{
+  margin-left:60px;
+}
+  .rgb{
+    margin-left: 650px;
+  }
+
+  .filtros{
+    margin-left: 600px;
+  }

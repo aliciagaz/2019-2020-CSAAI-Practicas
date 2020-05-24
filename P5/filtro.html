@@ -8,14 +8,23 @@
   </head>
   <body>
     <h1>EDICIÓN DE IMÁGENES</h1>
-    <canvas id="canvas"></canvas>
     <img src="FPGA.jpg" id="imagesrc">
+    <canvas id="canvas"></canvas>
+    <div class="filtros">
+      <br>
+      <button type="button" name="grises">GRISES</button>
+      <button type="button" name="negativo">B&N</button>
+    </div>
+    <div class="rgb">
     <p>Rojo:</p>
-    <input type="range" id="deslizador" min="0" max="255" value="255"/>
+    <input type="range" id="deslizador_R" min="0" max="255" value="255"/>
+    <p id="range_value_R">00</p>
     <p>Verde:</p>
-    <input type="range" id="deslizador" min="0" max="255" value="255"/>
+    <input type="range" id="deslizador_G" min="0" max="255" value="255"/>
+    <p id="range_value_G">00</p>
     <p>Azul:</p>
-    <input type="range" id="deslizador" min="0" max="255" value="255"/>
-    <p id="range_value">00</p>
+    <input type="range" id="deslizador_B" min="0" max="255" value="255"/>
+    <p id="range_value_B">00</p>
+    </div>
   </body>
 </html>
