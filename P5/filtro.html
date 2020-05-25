@@ -2,18 +2,20 @@
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Filtro 5</title>
+    <title>Filtro</title>
     <link rel="stylesheet" href="filtro.css">
     <script src="filtro.js" defer></script>
   </head>
+  <audio src="musica_fondo.mp3" preload="none" controls></audio>
   <body>
     <h1>EDICIÓN DE IMÁGENES</h1>
     <img src="FPGA.jpg" id="imagesrc">
     <canvas id="canvas"></canvas>
     <div class="filtros">
       <br>
-      <button type="button" name="grises">GRISES</button>
-      <button type="button" name="negativo">B&N</button>
+      <button type="button" id="grises">GRISES</button>
+      <button type="button" id="umbral">UMBRAL</button>
+      <button type="button" id="negativo">NEGATIVO</button>
     </div>
     <div class="rgb">
     <p>Rojo:</p>

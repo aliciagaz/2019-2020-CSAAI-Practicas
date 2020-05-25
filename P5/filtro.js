@@ -15,6 +15,11 @@ const range_value_R = document.getElementById('range_value_R');
 const range_value_G = document.getElementById('range_value_G');
 const range_value_B = document.getElementById('range_value_B');
 
+//-- FILTROS
+const grises = document.getElementById("grises");
+const umbral = document.getElementById("umbral");
+const negativo = document.getElementById("negativo");
+
 //-- Función de retrollamada de imagen cargada
 //-- La imagen no se carga instantaneamente, sino que
 //-- lleva un tiempo. Sólo podemos acceder a ella una vez
@@ -112,6 +117,81 @@ deslizador_B.oninput = () => {
     if (data[i + 2] > umbral_B)
       data[i + 2] = umbral_B;
   }
+
+  //-- Poner la imagen modificada en el canvas
+  ctx.putImageData(imgData, 0, 0);
+}
+
+//-- FILTRO ESCALA DE GRISES
+grises.onclick = () => {
+
+  //-- Situar la imagen original en el canvas
+  //-- No se han hecho manipulaciones todavia
+  ctx.drawImage(img, 0,0);
+
+  //-- Obtener la imagen del canvas en pixeles
+  let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  //-- Obtener el array con todos los píxeles
+  let data = imgData.data
+
+  //-- Filtrar la imagen según el nuevo umbral
+  for (let i = 0; i < data.length; i += 4) {
+    var grises_escala = 0.33 * data[i] + 0.5 * data [i +1] + 0.15 * data [i + 2];
+    data[i] = grises_escala;
+    data[i + 1] = grises_escala;
+    data[i + 2] = grises_escala;
+  }
+
+  //-- Poner la imagen modificada en el canvas
+  ctx.putImageData(imgData, 0, 0);
+}
+
+//-- FILTRO UMBRAL
+umbral.onclick = () => {
+
+  //-- Situar la imagen original en el canvas
+  //-- No se han hecho manipulaciones todavia
+  ctx.drawImage(img, 0,0);
+
+  //-- Obtener la imagen del canvas en pixeles
+  let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  //-- Obtener el array con todos los píxeles
+  let data = imgData.data
+
+  //-- Filtrar la imagen según el nuevo umbral
+  for (let i = 0; i < data.length; i += 4) {
+    var grises_escala = data[i] + data [i +1] + data [i + 2]/50;
+    data[i] = grises_escala;
+    data[i + 1] = grises_escala;
+    data[i + 2] = grises_escala;
+  }
+
+  //-- Poner la imagen modificada en el canvas
+  ctx.putImageData(imgData, 0, 0);
+}
+
+//-- FILTRO NEGATIVO
+negativo.onclick = () => {
+
+  //-- Situar la imagen original en el canvas
+  //-- No se han hecho manipulaciones todavia
+  ctx.drawImage(img, 0,0);
+
+  //-- Obtener la imagen del canvas en pixeles
+  let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  //-- Obtener el array con todos los píxeles
+  let data = imgData.data
+
+  //-- Filtrar la imagen según el nuevo umbral
+  for ( var i = 0; i < data.length; i++ ) {
+        var red = data[ i * 4 ];
+        var green = data[ i * 4 + 1 ];
+        var blue = data[ i * 4 + 2 ];
+
+        data[ i * 4 ] = 255 - red;
+        data[ i * 4 + 1 ] = 255 - green;
+        data[ i * 4 + 2 ] = 255 - blue;
+    }
 
   //-- Poner la imagen modificada en el canvas
   ctx.putImageData(imgData, 0, 0);
